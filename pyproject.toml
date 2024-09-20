@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "chatgpt"
+version = "0.1.0"
+description = ""
+authors = ["Suwarrna-2001 <suwarna.shukla@bluebash.co>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.15"
+fastapi = {extras = ["standard"], version = "^0.115.0"}
+SQLAlchemy = "^2.0.34"
+alembic = "^1.13.2"
+pydantic = "^2.9.1"
+openai = "^1.44.1"
+streamlit = "^1.38.0"
+pytest = "^8.3.3"
+PyJWT = "^2.9.0"
+python-dotenv = "^1.0.1"
+langchain = "^0.2.16"
+langgraph = "^0.2.19"
+langserve = "^0.2.3"
+pydantic-settings = "^2.5.2"
+psycopg2-binary = "^2.9.9"
+uvicorn = "^0.30.6"
+psycopg2 = "^2.9.9"
+asyncpg = "^0.29.0"
+langchain-community = "^0.2.5"
+langchain-anthropic = "^0.1.15"
+black = "^24.4.2"
+langchain-openai = "^0.1.17"
+pandas = "^2.2.2"
+openpyxl = "^3.1.5"
+xlrd = "^2.0.1"
+greenlet = "^3.1.0"
+psycopg = "^3.2.2"
+pgvector = "0.2.5"
+langchain-postgres = "^0.0.12"
+unicorn = "^2.0.1.post1"
+tavily-python = "^0.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
