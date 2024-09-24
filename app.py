@@ -12,6 +12,8 @@ from controllers.login_controller import router as login_router
 from controllers.all_user_controller import router as user_router
 from controllers.all_session_controller import router as sessions_router
 from controllers.all_session_User_controller import router as user_sessions_router
+from langchain_components.qaRAG import router as pdf_router
+
 
 import pdb
 
@@ -41,3 +43,4 @@ app.include_router(login_router)
 app.include_router(user_router)
 app.include_router(sessions_router)
 app.include_router(user_sessions_router)
+app.include_router(pdf_router)

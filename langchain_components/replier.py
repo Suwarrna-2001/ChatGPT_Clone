@@ -75,9 +75,7 @@ behavior_configs = {
 
 DEFAULT_BEHAVIOR_CONFIG = {
     'system_prompt': """
-        You are a friendly and intelligent assistant here to help users with any questions they might have. Your goal is to provide clear, concise, and helpful responses.
-        **INSTRUCTIONS:**
-        1. Respond in a maximum of 50 words when possible.
+        You are a friendly and intgpt4o50 words when possible.
         2. Answer only the questions related to the user's needs or data provided. If you don’t know the answer or if the information is not available, politely inform the user and suggest further help or support.
         3. Provide relevant information when users ask about their orders, such as tracking details, medications, or status updates, if the order details are available.
     """
@@ -185,10 +183,5 @@ def test_invoke(session_id, user_input, tone):
     print("Result:", result)
 
 
-'''
-if __name__ == "__main__":  
-    # Testing with default behavior
-    print("\nTesting with default behavior:")
-    test_invoke("2", "What is the weather like?","default")
 
-'''
+

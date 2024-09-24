@@ -27,7 +27,6 @@ async def give_ans_to_query(request: Request, db: AsyncSession = Depends(get_db)
         behavior_config = behavior_configs.get(tone, behavior_configs.get("default"))
         chain = prepare_prompt_and_chain(session_id=session_id, behavior_config=behavior_config)
         result = chain.invoke({"input": user_query}, config={"configurable": {"session_id": session_id}})
-        
         return {"session_id": session_id, "response": result.content}
     
     except SQLAlchemyError as e:
@@ -41,6 +40,3 @@ async def give_ans_to_query(request: Request, db: AsyncSession = Depends(get_db)
 
 
   
-### yha per session id ki jageh tone store ho rhi hai to ise sahi kerna hai 4 column bane to 
-# thik hai verna tone ko store kerne ki jaroorat nhi hai
-#session id ko session id me hi store kerna hai
