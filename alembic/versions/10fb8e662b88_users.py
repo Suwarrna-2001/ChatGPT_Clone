@@ -1,7 +1,7 @@
 """users
 
 Revision ID: 10fb8e662b88
-Revises: 73e333afa1ae
+Revises: b37bde7f6642
 Create Date: 2024-09-24 15:31:52.806996
 
 """
@@ -13,7 +13,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = '10fb8e662b88'
-down_revision: Union[str, None] = '73e333afa1ae'
+down_revision: Union[str, None] = 'b37bde7f6642'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.drop_table('message_store')
     op.drop_table('langchain_pg_collection')
     op.drop_table('langchain_pg_embedding')
-    op.add_column('users', sa.Column('password_hash', sa.String(), nullable=True))
+    op.add_column('users', sa.Column('password_hash', sa.String(), nullable=False))
     # ### end Alembic commands ###
 
 
