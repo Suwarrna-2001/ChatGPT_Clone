@@ -10,7 +10,7 @@ from langchain_community.chat_message_histories import (
 )
 from langchain_community.retrievers import TavilySearchAPIRetriever
 from dotenv import load_dotenv
-
+import pdb
 load_dotenv()
 
 AZURE_OPENAI_API_KEY = os.getenv('AZURE_OPENAI_API_KEY')
@@ -75,9 +75,7 @@ behavior_configs = {
 
 DEFAULT_BEHAVIOR_CONFIG = {
     'system_prompt': """
-        You are a friendly and intelligent assistant here to help users with any questions they might have. Your goal is to provide clear, concise, and helpful responses.
-        **INSTRUCTIONS:**
-        1. Respond in a maximum of 50 words when possible.
+        You are a friendly and intgpt4o50 words when possible.
         2. Answer only the questions related to the user's needs or data provided. If you don’t know the answer or if the information is not available, politely inform the user and suggest further help or support.
         3. Provide relevant information when users ask about their orders, such as tracking details, medications, or status updates, if the order details are available.
     """
@@ -88,16 +86,16 @@ def prepare_prompt_and_chain(session_id, behavior_config=None, include_realtime=
     os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_OPENAI_ENDPOINT
     llm = AzureChatOpenAI(azure_deployment="gpt4o", api_version="2024-02-15-preview")
     
-    # Use default behavior config if no custom config is provided
+    
     behavior_config = behavior_config or DEFAULT_BEHAVIOR_CONFIG
 
-    # Dynamically decide whether to include realtime data in the user message
+    
     if include_realtime:
         prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", behavior_config['system_prompt']),
                 MessagesPlaceholder(variable_name="history"),
-                ("user", "{input}\n\n{realtime}"),  # Include realtime data
+                ("user", "{input}\n\n{realtime}"),  
             ]
         )
     else:
@@ -105,25 +103,25 @@ def prepare_prompt_and_chain(session_id, behavior_config=None, include_realtime=
             [
                 ("system", behavior_config['system_prompt']),
                 MessagesPlaceholder(variable_name="history"),
-                ("user", "{input}"),  # Exclude realtime data
+                ("user", "{input}"),  
             ]
         )
 
     with_message_history = RunnableWithMessageHistory(
-    prompt | llm,  # Ensure prompt and llm are properly defined elsewhere in your code
+    prompt | llm,  
     lambda session_id: PostgresChatMessageHistory(
-        connection_string=CONNECTION_STRING,  # Quotation marks added
+        connection_string=CONNECTION_STRING,  
         session_id=session_id
     ),
-    input_messages_key="input",  # Ensure this key matches the input field you're working with
-    history_messages_key="history",  # Ensure this key matches the history field you're working with
+    input_messages_key="input",  
+    history_messages_key="history",  
     history_factory_config=[
         ConfigurableFieldSpec(
             id="session_id",
             annotation=str,
             name="Session ID",
             description="Unique identifier for the conversation.",
-            default="",  # Ensure this fits your desired default behavior
+            default="",  
             is_shared=True,
         ),
     ],
@@ -152,43 +150,31 @@ def get_context(user_query, collection_name):
 
     
 
-def test_invoke(session_id, user_input, tone):
+def test_invoke(session_id, user_input, tone, context):
 
     os.environ["TAVILY_API_KEY"] = TAVILY_API_KEY
     retriever = TavilySearchAPIRetriever(k=2)
     
-    real = ""  # Initialize real-time data as empty
-    include_realtime = False  # Flag to include realtime data in prompt
+    real = ""  
+    include_realtime = False  
     
     if tone == "real-time":
-        real = retriever.invoke(user_input)##here I will have the long retrieved long data and I waill give it to llm
+        real = retriever.invoke(user_input)
         include_realtime = True
 
-    # Fetch behavior config for the session_id
     behavior_config = behavior_configs.get(tone, "DEFAULT_BEHAVIOR_CONFIG")
 
     if not isinstance(behavior_config, dict):
           behavior_config = DEFAULT_BEHAVIOR_CONFIG
 
-    # Prepare the chain with dynamic behavior
     chain = prepare_prompt_and_chain(session_id, behavior_config, include_realtime)
     
-    # Prepare input for the chain
     input_data = {"input": user_input}
     if include_realtime:
-        input_data["realtime"] = real  # Include real-time data if needed
+        input_data["realtime"] = real  
+    input_data["context"] = context
     
-    # Invoke the chain with a test input
     result = chain.invoke(input_data, config={"configurable": {"session_id": session_id}})
-    
-    # Print the result
-    print("Result:", result)
+    return result.content
 
 
-'''
-if __name__ == "__main__":  
-    # Testing with default behavior
-    print("\nTesting with default behavior:")
-    test_invoke("2", "What is the weather like?","default")
-
-'''
