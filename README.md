@@ -56,7 +56,7 @@ Ensure that your backend API (FastAPI) is running and accessible at the defined 
 
 ## Screenshots
 
-![SmartGPT Frontend](./screenshots/smartgpt_ui.png)
+![SmartGPT Frontend](./static/SmartGPT.png)
 
 ---
 
