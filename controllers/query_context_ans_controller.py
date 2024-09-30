@@ -1,3 +1,5 @@
+####--------------------This API I have not used till now--------------------------------------------
+
 from fastapi import APIRouter, Request, HTTPException, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import requests
@@ -32,7 +34,7 @@ async def query_and_respond(request: Request, db: AsyncSession = Depends(get_db)
             "question": user_query
         }
 
-        pdf_response = requests.post(f"{BASE_URL}/query-pdf/", json=query_pdf_payload)
+        pdf_response = requests.post(f"{BASE_URL}/query-pdf/", json=query_pdf_payload)##yha se data lenge
 
         if pdf_response.status_code == 200:
             context_from_pdf = pdf_response.json().get("answer", "")
@@ -44,7 +46,7 @@ async def query_and_respond(request: Request, db: AsyncSession = Depends(get_db)
                 "query": final_query,
                 "tone": tone
             }
-            bot_response = requests.post(f"{BASE_URL}/talk-to-bot", json=bot_payload)
+            bot_response = requests.post(f"{BASE_URL}/talk-to-bot", json=bot_payload)#query ke saath pdf context bhi dal denge
 
             if bot_response.status_code == 200:
                 return bot_response.json()

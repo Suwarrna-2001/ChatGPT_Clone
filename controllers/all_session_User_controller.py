@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from models.user import User
-from models.session import Session  # Make sure to import your Session model
+from models.session import Session  
 from database import get_db
 import logging
 

@@ -103,10 +103,10 @@ async def query_pdf(
             logger.warning(f"No relevant information found for question: {question}")
             return JSONResponse(content={"message": "No relevant information found"}, status_code=404)
 
-        # Join the retrieved context from the PDFs
-        context = " ".join([doc.page_content for doc, _ in docs_with_scores])
+        context = [f"{idx+1}. {doc.page_content}" for idx, (doc, _) in enumerate(docs_with_scores)]
 
         return JSONResponse(content={"session_id": session_id, "answer": context})
+
     
     except Exception as e:
         logger.error(f"Error retrieving embeddings for question '{question}': {str(e)}", exc_info=True)
