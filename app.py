@@ -14,7 +14,7 @@ from controllers.all_session_controller import router as sessions_router
 from controllers.all_session_User_controller import router as user_sessions_router
 from langchain_components.qaRAG import router as pdf_router
 from controllers.protected_route_controller import router as protected_route
-
+from controllers.query_context_ans_controller import router as ans_pdf
 
 import pdb
 
@@ -46,3 +46,4 @@ app.include_router(sessions_router)
 app.include_router(user_sessions_router)
 app.include_router(pdf_router)
 app.include_router(protected_route)
+app.include_router(ans_pdf)
