@@ -162,5 +162,6 @@ The application uses PostgreSQL with the following tables:
 - **User Table**: Stores user information.
 - **Session Table**: Manages user sessions linked to their chat history.
 
-## License
-This project is licensed under the MIT License.
+## Refer: 
+- For more technical details of the application refer my blog https://www.langchain.ca/blog/ghost/#/editor/post/66ffdeeb5332230b725f8be7
+- To safeguard your sensitive and private data from LLMs refer my blog https://www.langchain.ca/blog/ghost/#/editor/post/66fe5b755332230b725f8b43 and to see the code base refer my github account https://github.com/langchain-tech/guardrails-demo
